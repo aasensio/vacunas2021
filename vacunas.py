@@ -19,6 +19,8 @@ if __name__ == '__main__':
     values = tmp.loc[tmp['cod_ine'] == 1]['Fecha publicación'].values    
     last_day = datetime.datetime.strptime(values[-1], '%Y-%m-%d')
     now = datetime.datetime.now()
+
+    menores_14 = [15.25, 13.76, 10.64, 14.38, 12.45, 12.70, 11.66, 14.74, 14.98, 14.36, 13.28, 11.55, 14.89, 16.63, 15.14, 13.61, 14.14, 19.30, 23.13]
         
 
     pct_completa = []
@@ -65,13 +67,15 @@ if __name__ == '__main__':
             y_fit = f(days_full / 100.0, a_, c_, d_)
 
             if (i == 0):            
-                ax.flat[i].plot(days[i], pct_completa[i], linewidth=3, label='2 dosis')
-                ax.flat[i].plot(days[i], pct_unadosis[i], label='1 dosis')            
-                ax.flat[i].plot(days_full, y_fit * 100.0, ':', linewidth=3, label='Proyección')
+                ax.flat[i].plot(days[i], pct_completa[i], linewidth=3, label='2 dosis', color='C0')
+                ax.flat[i].plot(days[i], pct_unadosis[i], label='1 dosis', color='C1')            
+                ax.flat[i].plot(days_full, y_fit * 100.0, ':', linewidth=3, label='Proyección', color='C2')
+                ax.flat[i].axhline(100-menores_14[i], label='Límite >14 años', color='C3')
             else:
-                ax.flat[i].plot(days[i], pct_completa[i], linewidth=3)
-                ax.flat[i].plot(days[i], pct_unadosis[i])
-                ax.flat[i].plot(days_full, y_fit * 100.0, ':', linewidth=3)
+                ax.flat[i].plot(days[i], pct_completa[i], linewidth=3, color='C0')
+                ax.flat[i].plot(days[i], pct_unadosis[i], color='C1')
+                ax.flat[i].plot(days_full, y_fit * 100.0, ':', linewidth=3, color='C2')
+                ax.flat[i].axhline(100-menores_14[i], color='C3')
 
             ax.flat[i].set_ylim([0, 100])            
 
